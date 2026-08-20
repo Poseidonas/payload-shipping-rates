@@ -15,7 +15,7 @@
   "bugs": "https://github.com/Poseidonas/payload-shipping-rates/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Poseidonas/payload-shipping-rates"
+    "url": "git+https://github.com/Poseidonas/payload-shipping-rates.git"
   },
   "license": "MIT",
   "author": "George Vasiliades (https://github.com/Poseidonas)",
