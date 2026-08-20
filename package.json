@@ -1,0 +1,67 @@
+{
+  "name": "payload-shipping-rates",
+  "version": "1.0.0",
+  "description": "Shipping zones, methods and rate calculation for Payload ecommerce, in integer minor units.",
+  "keywords": [
+    "payload",
+    "payloadcms",
+    "payload-plugin",
+    "ecommerce",
+    "shipping",
+    "shipping-rates",
+    "shipping-zones"
+  ],
+  "homepage": "https://github.com/Poseidonas/payload-shipping-rates",
+  "bugs": "https://github.com/Poseidonas/payload-shipping-rates/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Poseidonas/payload-shipping-rates"
+  },
+  "license": "MIT",
+  "author": "George Vasiliades (https://github.com/Poseidonas)",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "clean": "rimraf dist",
+    "lint": "eslint src test",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.1",
+    "@types/node": "22.19.9",
+    "eslint": "9.39.1",
+    "payload": "3.88.0",
+    "rimraf": "6.0.1",
+    "tsup": "8.5.0",
+    "typescript": "5.7.2",
+    "typescript-eslint": "8.46.4",
+    "vitest": "4.0.18"
+  },
+  "peerDependencies": {
+    "payload": ">=3.50 <4"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+  id-token: write
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v7
+        with:
+          cache: pnpm
+          node-version: '22'
+          registry-url: https://registry.npmjs.org
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm lint
+
+      - run: pnpm typecheck
+
+      - run: pnpm test
+
+      - run: pnpm build
+
+      - id: version
+        run: echo "current=$(node -p "require('./package.json').name+'@'+require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - id: registry
+        run: |
+          if npm view "${{ steps.version.outputs.current }}" version > /dev/null 2>&1; then
+            echo "published=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "published=no" >> "$GITHUB_OUTPUT"
+          fi
+
+      - if: steps.registry.outputs.published == 'no'
+        run: npm publish --provenance --access public
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          registry-url: https://npm.pkg.github.com
+
+      - continue-on-error: true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          node -e "const f='./package.json';const p=require(f);p.name='@poseidonas/'+p.name;require('fs').writeFileSync(f,JSON.stringify(p,null,2)+'\n')"
+          npm publish --provenance=false --access public
+          git checkout -- package.json
+
+      - uses: softprops/action-gh-release@v3
+        with:
+          generate_release_notes: true
