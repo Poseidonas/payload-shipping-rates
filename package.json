@@ -1,6 +1,6 @@
 {
   "name": "payload-shipping-rates",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shipping zones, methods and rate calculation for Payload ecommerce, in integer minor units.",
   "keywords": [
     "payload",
