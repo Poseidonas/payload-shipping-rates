@@ -47,6 +47,9 @@ jobs:
           fi
 
       - if: steps.registry.outputs.published == 'no'
+        run: npm install -g npm@11
+
+      - if: steps.registry.outputs.published == 'no'
         run: npm publish --provenance --access public
 
       - uses: actions/setup-node@v7
